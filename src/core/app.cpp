@@ -43,3 +43,7 @@ void App::display(){
     SDL_RenderPresent(renderer);
 }
 
+
+SDL_Renderer *App::getRenderer(){
+    return renderer;
+}

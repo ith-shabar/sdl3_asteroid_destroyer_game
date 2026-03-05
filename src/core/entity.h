@@ -30,7 +30,7 @@ class Entity {
         void updateBound();
 
         //Setters
-        void setTexture(SDL_Texture *tex, int width , int height);
+        void setTexture(SDL_Texture *tex, int x, int y, int width , int height);
 
         void setPosition(SDL_FPoint pos);
         void setPosition(float x , float y);

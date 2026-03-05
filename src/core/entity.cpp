@@ -17,18 +17,19 @@ void Entity::update(){
 
 void Entity::render(SDL_Renderer *renderer){
     if (!texture || !active) return;
+
+    float w = src_rect.w * scale;
+    float h = src_rect.h * scale;
+    
     dst_rect = {
-        position.x,
-        position.y,
-        src_rect.w * scale,
-        src_rect.h * scale
+        position.x - w * 0.5f,
+        position.y - h * 0.5f,
+        w,
+        h
     };
 
     SDL_RenderTextureRotated(renderer, texture, &src_rect, &dst_rect, rotation, nullptr, SDL_FLIP_NONE);
-    
 }
-
-void Entity::onCollision(Entity *other){}
 
 void Entity::updateBound(){
     float w = src_rect.w * scale;
@@ -41,9 +42,13 @@ void Entity::updateBound(){
     };
 }
 
+void Entity::onCollision(Entity *other){}
+
 //Setters
-void Entity::setTexture(SDL_Texture *tex, int width , int height){ 
+void Entity::setTexture(SDL_Texture *tex, int x, int y, int width , int height){ 
     texture = tex;
+    src_rect.x = x;
+    src_rect.y = y;
     src_rect.w = width;
     src_rect.h = height;
 

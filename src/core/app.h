@@ -21,6 +21,7 @@ class App {
         void renderClear();
         void display();
 
+        SDL_Renderer *getRenderer();
 };
 
 

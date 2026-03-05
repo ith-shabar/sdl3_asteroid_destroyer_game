@@ -13,6 +13,8 @@ extern "C" {
 float deltaTime();
 void updateTime();
 
+uint64_t getTime();
+
 void setFPS(uint64_t start_frame);
 
 #ifdef __cplusplus
