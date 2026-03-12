@@ -7,7 +7,7 @@ int player_health = 100;
 int player_damage = 100;
 int score = 0;
 
-int bullet_speed = 500;
+int bullet_speed = 800;
 int bullet_spread = 5;
 int bullet_delay = 100;
 

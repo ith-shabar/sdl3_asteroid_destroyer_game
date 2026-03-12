@@ -4,9 +4,12 @@
 #include "../core/time.h"
 
 void BulletManager::update(){
+    float delta_time = deltaTime();
     for (auto * bullet  :entities) {
         if (!bullet->active) continue;
 
+        // update bullets
+        bullet->update();
 
         // check for off screen bullet
         if (bullet->getPositionX() > SCREEN_WIDTH ||  bullet->getPositionX() < 0 

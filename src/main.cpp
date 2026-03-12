@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 
     texture *player_tex = app.createTextureFromSurface("assets/player.png");
     texture *bullet_tex = app.createTextureFromSurface("assets/bullet.png");
+    texture *asteroid01_tex = app.createTextureFromSurface("assets/asteroid01.png");
+    texture *asteroid02_tex = app.createTextureFromSurface("assets/asteroid02.png");
+    texture *asteroid03_tex = app.createTextureFromSurface("assets/asteroid03.png");
 
     Player player;
     player.setTexture(player_tex,0, 0, 24, 24);
@@ -31,9 +34,7 @@ int main(int argc, char *argv[])
 
         app.renderClear();
         player.render(app.getRenderer());
-        player.getBulletManager().render(app.getRenderer()); 
         player.update();
-        player.getBulletManager().update();
         app.display();
 
         capFPS(start_time);

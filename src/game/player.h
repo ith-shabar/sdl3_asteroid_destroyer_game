@@ -4,8 +4,7 @@
 #include "../core/entity.h"
 #include "bulletmanager.h"
 
-#include <SDL3/SDL_render.h>
-#include <vector>
+#include <SDL3/SDL.h>
 
 class Player : public Entity {
     private:
@@ -14,7 +13,8 @@ class Player : public Entity {
         SDL_Texture *bullet_texture = nullptr;
 
     public:
-        void update();
+        void update() override;
+        void render(SDL_Renderer *renderer) override;
         void calculateRotation();
         void handleInput(SDL_Event &event);
 

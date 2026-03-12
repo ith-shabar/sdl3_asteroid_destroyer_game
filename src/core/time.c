@@ -3,22 +3,30 @@
 #include "time.h"
 
 static uint64_t last_time = 0;
+static float cached_time = 0;
+static int called_this_frame = 0;
 
 float deltaTime(){
     uint64_t current_time = SDL_GetTicks();
-    float dt = (current_time - last_time) / 1000.0f;
-    last_time = current_time;
+    if (!called_this_frame) {
+        float dt = (current_time - last_time) / 1000.0f;
 
-    //clamping the deltatime to 50ms
-    if (dt > 0.05f) dt = 0.05f;
-    if (dt < 0.0f) dt = 0.0f;
+        //clamping the deltatime to 50ms
+        if (dt > 0.05f) dt = 0.05f;
+        if (dt < 0.0f) dt = 0.0f;
 
-    return dt;
+        last_time = current_time;
+        cached_time = dt;
+        called_this_frame = 1;
+    }
+
+    return cached_time;
 }
 
 void updateTime(){
     uint64_t current_time = SDL_GetTicks();
     if (last_time == 0) last_time = current_time;
+    called_this_frame = 0;
 }
 
 uint64_t getTime(){

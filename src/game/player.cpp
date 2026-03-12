@@ -4,10 +4,8 @@
 #include "variables.h"
 
 #include <cmath>
-#include <random>
 
 void Player::update(){
-   float delta_time = deltaTime();
    float vx = 0,vy = 0;
 
    multi_key_press = keyS + keyD + keyA + keyW;
@@ -23,18 +21,18 @@ void Player::update(){
    if (keySpace || keyMouseButtonLeft) fireBullet();
   
    setVelocity(vx,vy);
-   position.x += velocity.x * delta_time;
-   position.y += velocity.y * delta_time;
+   Entity::update();
 
    calculateRotation();
    updateBound();
 
-   // update bullets
-   for (auto* bullet : bullets.getEntities()) {
-       bullet->position.x += bullet->velocity.x * delta_time;
-       bullet->position.y += bullet->velocity.y * delta_time;
-       bullet->updateBound();
-   }
+   //update bullet
+   getBulletManager().update();
+}
+
+void Player::render(SDL_Renderer * renderer){
+    Entity::render(renderer);
+    getBulletManager().render(renderer); 
 }
 
 void Player::calculateRotation(){
