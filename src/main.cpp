@@ -7,13 +7,15 @@ int main(int argc, char *argv[])
 {               
     App app;
     app.init();
-    app.renderWindow("testing", 1000, 700, 0);
+    app.renderWindow("testing", SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
-    texture *tex = app.createTextureFromSurface("assets/player.png");
+    texture *player_tex = app.createTextureFromSurface("assets/player.png");
+    texture *bullet_tex = app.createTextureFromSurface("assets/bullet.png");
 
     Player player;
-    player.setTexture(tex,0, 0, 24, 24);
+    player.setTexture(player_tex,0, 0, 24, 24);
     player.setPosition(500,450);
+    player.setBulletTex(bullet_tex);
 
     SDL_Event event;
 
@@ -29,7 +31,9 @@ int main(int argc, char *argv[])
 
         app.renderClear();
         player.render(app.getRenderer());
+        player.getBulletManager().render(app.getRenderer()); 
         player.update();
+        player.getBulletManager().update();
         app.display();
 
         capFPS(start_time);

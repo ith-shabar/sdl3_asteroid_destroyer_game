@@ -54,6 +54,8 @@ void Entity::setTexture(SDL_Texture *tex, int x, int y, int width , int height){
 
 void Entity::setPosition(SDL_FPoint pos){ position = pos; }
 void Entity::setPosition(float x , float y){ position.x = x; position.y = y;}
+void Entity::setPositionX(float x){ position.x = x;}
+void Entity::setPositionY(float y){position.y = y;}
 
 void Entity::setVelocity(SDL_FPoint vel){ velocity = vel; }
 void Entity::setVelocity(float x, float y){ velocity.x = x; velocity.y = y;}
@@ -67,7 +69,11 @@ void Entity::setActive(bool act){ active = act; }
 
 //Getters
 SDL_FPoint Entity::getPosition(){ return position; }
+float Entity::getPositionX(){ return position.x;}
+float Entity::getPositionY(){ return position.y;}
 SDL_FPoint Entity::getVelocity(){ return velocity; }
+float Entity::getVelocityX() {return velocity.x;}
+float Entity::getVelocityY() {return velocity.y;}
 float Entity::getRotation(){ return rotation; }
 float Entity::getScale(){ return scale; }
 SDL_Texture *Entity::getTextutre(){ return texture; }

@@ -4,7 +4,7 @@
 #include <SDL3/SDL.h>
 
 class Entity {
-    protected:
+    public:
         SDL_FPoint position = {0.0f, 0.0f};
         SDL_FPoint velocity = {0.0f, 0.0f};
         float rotation = 0.0f;
@@ -17,7 +17,6 @@ class Entity {
 
         bool active = true;
 
-    public:
         Entity(SDL_FPoint pos = {0.0f, 0.0f});
         ~Entity();
 
@@ -32,6 +31,8 @@ class Entity {
 
         void setPosition(SDL_FPoint pos);
         void setPosition(float x , float y);
+        void setPositionX(float x);
+        void setPositionY(float y);
 
         void setVelocity(SDL_FPoint vel);
         void setVelocity(float x, float y);
@@ -45,7 +46,11 @@ class Entity {
 
         //Getters
         SDL_FPoint getPosition();
+        float getPositionX();
+        float getPositionY();
         SDL_FPoint getVelocity();
+        float getVelocityX();
+        float getVelocityY();
 
         float getRotation();
         float getScale();

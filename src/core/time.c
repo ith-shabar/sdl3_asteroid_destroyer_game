@@ -6,11 +6,12 @@ static uint64_t last_time = 0;
 
 float deltaTime(){
     uint64_t current_time = SDL_GetTicks();
-    float dt = (current_time - last_time) /1000.0f;
+    float dt = (current_time - last_time) / 1000.0f;
     last_time = current_time;
 
     //clamping the deltatime to 50ms
     if (dt > 0.05f) dt = 0.05f;
+    if (dt < 0.0f) dt = 0.0f;
 
     return dt;
 }
