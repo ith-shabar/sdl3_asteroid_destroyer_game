@@ -3,6 +3,7 @@
 #include "game/player.h"
 #include "game/asteroid.h"
 #include "game/variables.h"
+#include <vector>
 
 int main(int argc, char *argv[])
 {               
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     texture *asteroid01_tex = app.createTextureFromSurface("assets/asteroid01.png");
     texture *asteroid02_tex = app.createTextureFromSurface("assets/asteroid02.png");
     texture *asteroid03_tex = app.createTextureFromSurface("assets/asteroid03.png");
+    std::vector<SDL_Texture*> asteroid_tex = {asteroid01_tex, asteroid02_tex, asteroid03_tex};
 
     Player player;
     player.setTexture(player_tex,0, 0, 24, 24);
@@ -22,10 +24,9 @@ int main(int argc, char *argv[])
     player.setBulletTex(bullet_tex);
 
     Asteroid asteroid;
-    asteroid.setAsteroidTex(asteroid02_tex);
+    asteroid.setTextureList(asteroid_tex);
 
     SDL_Event event;
-
     while (game_running) {
 
         uint64_t start_time = getTime();

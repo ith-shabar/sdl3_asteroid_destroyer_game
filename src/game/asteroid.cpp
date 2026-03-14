@@ -3,7 +3,6 @@
 
 #include "../core/algorithm.h"
 #include "../core/time.h"
-#include "../core/entitymanager.h"
 
 #include <cmath>
 #include <cstdint>
@@ -28,6 +27,7 @@ void Asteroid::spwan(){
     float direction_angle_degrees;
     float velocity_offset = getRandomNUmber(1, 2);
     float rotation_offset = getRandomNUmber(0, 30);
+    int texture_index = getRandomNUmber(0, 2);
 
     // Random offset for incoming asteroid
     // ....
@@ -53,7 +53,7 @@ void Asteroid::spwan(){
     }
 
     Entity* asteroid = new Entity();
-    asteroid->setTexture(asteroid_texture, 0, 0, 30, 30);
+    asteroid->setTexture(getTextureList()[texture_index], 0, 0, 30, 30);
     asteroid->setPosition(position_x, position_y);
     asteroid->setScale(2);
 

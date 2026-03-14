@@ -55,6 +55,8 @@ void Entity::setTexture(SDL_Texture *tex, int x, int y, int width , int height){
 
 }
 
+void Entity::setTextureList(std::vector<SDL_Texture*> tex_list){ texture_list = tex_list; }
+
 void Entity::setPosition(SDL_FPoint pos){ position = pos; }
 void Entity::setPosition(float x , float y){ position.x = x; position.y = y;}
 void Entity::setPositionX(float x){ position.x = x;}
@@ -81,7 +83,8 @@ float Entity::getVelocityY() {return velocity.y;}
 float Entity::getRotation(){ return rotation; }
 float Entity::getRotationSpeed() { return rotation_speed;}
 float Entity::getScale(){ return scale; }
-SDL_Texture *Entity::getTextutre(){ return texture; }
+SDL_Texture *Entity::getTexture(){ return texture; }
+std::vector<SDL_Texture*> Entity::getTextureList(){ return texture_list;}
 SDL_FRect Entity::getBound(){ return bound; }
 SDL_FRect Entity::getSrcRect(){ return src_rect;}
 SDL_FRect Entity::getDstRect(){ return dst_rect; }

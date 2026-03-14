@@ -2,6 +2,9 @@
 #define ENTITY_H
 
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_render.h>
+
+#include <vector>
 
 class Entity {
     public:
@@ -12,6 +15,8 @@ class Entity {
         float scale = 1.0f;
 
         SDL_Texture *texture = nullptr;
+        std::vector<SDL_Texture*> texture_list;
+
         SDL_FRect bound = {0.0f, 0.0f, 0.0f, 0.0f};
         SDL_FRect src_rect = {0.0f, 0.0f, 0.0f, 0.0f};
         SDL_FRect dst_rect = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -29,6 +34,7 @@ class Entity {
 
         //Setters
         void setTexture(SDL_Texture *tex, int x, int y, int width , int height);
+        void setTextureList(std::vector<SDL_Texture*> tex_list);
 
         void setPosition(SDL_FPoint pos);
         void setPosition(float x , float y);
@@ -58,7 +64,8 @@ class Entity {
         float getRotationSpeed();
         float getScale();
 
-        SDL_Texture *getTextutre();
+        SDL_Texture *getTexture();
+        std::vector<SDL_Texture*> getTextureList();
 
         SDL_FRect getBound();
         SDL_FRect getSrcRect();
