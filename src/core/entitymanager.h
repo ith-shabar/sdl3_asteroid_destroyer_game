@@ -1,8 +1,6 @@
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
 
-#include "entity.h"
-
 #include <SDL3/SDL.h>
 #include <algorithm>
 #include <cstddef>
@@ -14,9 +12,7 @@ class EntityManager{
         std::vector<T*> entities;
 
     public:
-        virtual ~EntityManager(){
-            clear();
-        }
+        virtual ~EntityManager(){ clear(); }
 
         //add entity
         void add(T* entity){ entities.push_back(entity); }

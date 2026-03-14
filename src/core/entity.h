@@ -8,6 +8,7 @@ class Entity {
         SDL_FPoint position = {0.0f, 0.0f};
         SDL_FPoint velocity = {0.0f, 0.0f};
         float rotation = 0.0f;
+        float rotation_speed = 0.0f;
         float scale = 1.0f;
 
         SDL_Texture *texture = nullptr;
@@ -40,6 +41,7 @@ class Entity {
         void setVelocityY(float y);
 
         void setRotation(float rot);
+        void setRotationSpeed(float rot_speed);
         void setScale(float scl);
 
         void setActive(bool act);
@@ -53,6 +55,7 @@ class Entity {
         float getVelocityY();
 
         float getRotation();
+        float getRotationSpeed();
         float getScale();
 
         SDL_Texture *getTextutre();

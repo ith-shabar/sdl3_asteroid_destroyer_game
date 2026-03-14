@@ -21,11 +21,16 @@ extern int bullet_speed;
 extern int bullet_spread;
 extern int bullet_delay;
 
-typedef enum game_mode { home, game, result } game_mode  ;
+extern int asteroid_speed;
+extern int asteroid_delay;
+
+typedef enum game_mode { home, game, result } game_mode;
 extern game_mode mode;
 
 typedef enum levels { one,two,three,four } levels;
 extern levels level;
+
+typedef enum screen_side { top, bottom, left, right} screen_side;
 
 //Keys 
 extern bool keyW;

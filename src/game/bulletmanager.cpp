@@ -1,10 +1,7 @@
 #include "bulletmanager.h"
 #include "variables.h"
 
-#include "../core/time.h"
-
 void BulletManager::update(){
-    float delta_time = deltaTime();
     for (auto * bullet  :entities) {
         if (!bullet->active) continue;
 

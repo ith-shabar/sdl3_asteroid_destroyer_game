@@ -1,5 +1,6 @@
 #include "entity.h"
 #include "time.h"
+#include <algorithm>
 
 Entity::Entity(SDL_FPoint pos){}
 Entity::~Entity() = default;
@@ -9,6 +10,8 @@ void Entity::update(){
    position.x += velocity.x * delta_time;
    position.y += velocity.y * delta_time;
    updateBound();
+
+   rotation += rotation_speed;
 }
 
 void Entity::render(SDL_Renderer *renderer){
@@ -63,6 +66,7 @@ void Entity::setVelocityX(float x){ velocity.x = x; }
 void Entity::setVelocityY(float y){ velocity.y = y; }
 
 void Entity::setRotation(float rot){ rotation = rot; }
+void Entity::setRotationSpeed(float rot_speed) { rotation_speed = rot_speed;}
 void Entity::setScale(float scl){ scale = scl; }
 
 void Entity::setActive(bool act){ active = act; }
@@ -75,6 +79,7 @@ SDL_FPoint Entity::getVelocity(){ return velocity; }
 float Entity::getVelocityX() {return velocity.x;}
 float Entity::getVelocityY() {return velocity.y;}
 float Entity::getRotation(){ return rotation; }
+float Entity::getRotationSpeed() { return rotation_speed;}
 float Entity::getScale(){ return scale; }
 SDL_Texture *Entity::getTextutre(){ return texture; }
 SDL_FRect Entity::getBound(){ return bound; }

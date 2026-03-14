@@ -1,6 +1,7 @@
 #include "core/app.h"
 #include "core/time.h"
 #include "game/player.h"
+#include "game/asteroid.h"
 #include "game/variables.h"
 
 int main(int argc, char *argv[])
@@ -20,6 +21,9 @@ int main(int argc, char *argv[])
     player.setPosition(500,450);
     player.setBulletTex(bullet_tex);
 
+    Asteroid asteroid;
+    asteroid.setAsteroidTex(asteroid02_tex);
+
     SDL_Event event;
 
     while (game_running) {
@@ -34,7 +38,9 @@ int main(int argc, char *argv[])
 
         app.renderClear();
         player.render(app.getRenderer());
+        asteroid.render(app.getRenderer());
         player.update();
+        asteroid.update();
         app.display();
 
         capFPS(start_time);

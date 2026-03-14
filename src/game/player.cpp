@@ -18,6 +18,11 @@ void Player::update(){
    if (keyW) vy -= current_player_speed;
    if (keyS) vy += current_player_speed;
 
+   if (bound.x + bound.w > SCREEN_WIDTH) vx -= player_speed;
+   if (bound.y + bound.h > SCREEN_HEIGHT) vy -= player_speed;
+   if (bound.x < 0) vx += player_speed;
+   if (bound.y < 0) vy += player_speed;
+
    if (keySpace || keyMouseButtonLeft) fireBullet();
   
    setVelocity(vx,vy);

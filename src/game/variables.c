@@ -11,6 +11,9 @@ int bullet_speed = 800;
 int bullet_spread = 5;
 int bullet_delay = 300;
 
+int asteroid_speed = 200;
+int asteroid_delay = 500;
+
 game_mode mode;
 levels level;
 
