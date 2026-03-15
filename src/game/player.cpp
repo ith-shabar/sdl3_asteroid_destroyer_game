@@ -1,10 +1,12 @@
 #include "../core/time.h"
 #include "../core/algorithm.h"
 #include "player.h"
-#include "asteroidmanager.h"
+#include "asteroid.h"
+#include "bullet.h"
 #include "variables.h"
 
 #include <cmath>
+#include <iostream>
 
 void Player::update(){
    float vx = 0,vy = 0;
@@ -79,47 +81,28 @@ void Player::handleInput(SDL_Event &event){
 }
 
 void Player::fireBullet(){
-    static uint64_t last_fire_time, current_time;
-    const int delay = bullet_delay;
-
-    // Random offset for bullet spread
-    int offsetAngle = getRandomNUmber(0, bullet_spread);
-
-    current_time = getTime();
-
-    if ((current_time - last_fire_time) >= delay) {
-        Entity* bullet = new Entity();
-        bullet->setPosition(position.x, position.y);
-
-        bullet->setTexture(bullet_texture, 0, 0, 3, 3);
-        bullet->setScale(2);
-        bullet->updateBound();
-
-        float angle_radian = (rotation - 90 + offsetAngle) * (3.14/180);
-        float velocity_x = std::cos(angle_radian) * bullet_speed;
-        float velocity_y = std::sin(angle_radian) * bullet_speed;
-
-        bullet->setVelocity(velocity_x,velocity_y);
-
-        bullets.add(bullet);
-        last_fire_time = current_time;
-    }
+    bullets.spawn(position, rotation);
 }
 
 void Player::onCollision(Entity *other){
     if (!other->getActive()) return;
 
-    if (dynamic_cast<AsteroidManager*>(other)) {
-        other->setActive(false);
+    if (other->getTypeID() == 2) {
+        this->setActive(false);
+        game_running = false;
+        std::cout<<"score:"<<score<< std::endl;
     }
 }
 
-void Player::setBulletTex(SDL_Texture * texture){ bullet_texture = texture; }
+void Player::setBulletTex(SDL_Texture * texture){ 
+    bullets.setBulletTexture(texture); 
+}
 
 
 void Player::setHealth(int health){ player_health = health; }
 int Player::getHealth(){ return player_health; }
 
+int Player::getTypeID() const { return type_id;}
 
 BulletManager& Player::getBulletManager(){ return bullets; }
 

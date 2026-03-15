@@ -11,6 +11,8 @@ class Asteroid : public Entity {
         AsteroidManager asteroids;
         SDL_Texture *asteroid_texture = nullptr;
 
+        static constexpr int type_id = 2;
+
     public:
         void spwan();
         void update() override;
@@ -23,6 +25,7 @@ class Asteroid : public Entity {
 
         void onCollision(Entity *other) override;
 
+        int getTypeID() const override;
         AsteroidManager& getAsteroidManager();
 };
 

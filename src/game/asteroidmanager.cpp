@@ -12,11 +12,9 @@ void AsteroidManager::update(){
 
         // check for off screen asteroid
     if (asteroid->getPositionX() < -off_screen_buffer || 
-            asteroid->getPositionX() > SCREEN_WIDTH + off_screen_buffer ||
-            asteroid->getPositionY() < -off_screen_buffer || 
-            asteroid->getPositionY() > SCREEN_HEIGHT + off_screen_buffer) {
-        asteroid->setActive(false);
-        }    
+        asteroid->getPositionX() > SCREEN_WIDTH + off_screen_buffer ||
+        asteroid->getPositionY() < -off_screen_buffer || 
+        asteroid->getPositionY() > SCREEN_HEIGHT + off_screen_buffer) { asteroid->setActive(false); }    
     }
 
     cleanUp();

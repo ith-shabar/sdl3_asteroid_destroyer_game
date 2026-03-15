@@ -7,7 +7,7 @@
 
 #include <cmath>
 #include <cstdint>
-#include <cstdio>
+#include <iostream>
 
 void Asteroid::update(){
     Entity::update();
@@ -30,9 +30,6 @@ void Asteroid::spwan(){
     float rotation_offset = getRandomNUmber(0, 30);
     int texture_index = getRandomNUmber(0, 2);
 
-    // Random offset for incoming asteroid
-    // ....
-
     screen_side edge = screen_side(getRandomNUmber(0, 3));
     // set the intial position of the asteroid to be on the top by setting the x and y position
     if (edge == top){ 
@@ -49,11 +46,13 @@ void Asteroid::spwan(){
         position_y = getRandomNUmber(0, SCREEN_HEIGHT);
     }
 
-    Entity* asteroid = new Asteroid();
+    Asteroid* asteroid = new Asteroid();
+    asteroid->setTextureList(texture_list);
     asteroid->setTexture(getTextureList()[texture_index], 0, 0, 30, 30);
     asteroid->setPosition(position_x, position_y);
     asteroid->setScale(getRandomNUmber(1, 3));
     asteroid->updateBound();
+
     // For each edge, calculate angle toward a random point in the screen
     float targetX = getRandomNUmber(0, SCREEN_WIDTH);
     float targetY = getRandomNUmber(0, SCREEN_HEIGHT);
@@ -73,11 +72,12 @@ void Asteroid::onCollision(Entity *other){
     if (!other->getActive()) return; // return if other is not active
    
     other->setActive(false);
-    if (this->getScale() > 1) {
+    if (this->getScale() > 2) {
         this->setScale(this->getScale()-1);
     }else {
         this->setActive(false);
     }
+    score += 10;
 }
 
 void Asteroid::render(SDL_Renderer *renderer){
@@ -89,6 +89,8 @@ void Asteroid::setAsteroidTex(SDL_Texture *texture){ asteroid_texture = texture;
 
 void Asteroid::setHealth(int hp){ health = hp;}
 int Asteroid::getHealth(){ return health;}
+
+int Asteroid::getTypeID() const { return type_id;}
 
 AsteroidManager& Asteroid::getAsteroidManager(){ return asteroids; }
 

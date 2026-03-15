@@ -13,6 +13,7 @@ class Player : public Entity {
         BulletManager bullets;
         SDL_Texture *bullet_texture = nullptr;
 
+        static constexpr int type_id = 1;
     public:
         void update() override;
         void render(SDL_Renderer *renderer) override;
@@ -27,6 +28,7 @@ class Player : public Entity {
 
         void onCollision(Entity *other) override;
 
+        int getTypeID() const override;
         BulletManager& getBulletManager();
 };
 

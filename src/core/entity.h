@@ -29,6 +29,7 @@ class Entity {
         virtual void update();
         virtual void render(SDL_Renderer *renderer);
         virtual void checkCollision(Entity *other);
+        virtual void checkCollision(Entity *other, int *side);
         virtual void onCollision(Entity *other);
 
         void updateBound();
@@ -72,6 +73,8 @@ class Entity {
         SDL_FRect getSrcRect();
         SDL_FRect getDstRect();
         bool getActive();
+
+        virtual int getTypeID() const;
 
         int getHeight();
         int getWidth();

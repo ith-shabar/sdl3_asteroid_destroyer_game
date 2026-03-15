@@ -1,6 +1,7 @@
 #include "entity.h"
 #include "time.h"
 #include <SDL3/SDL.h>
+#include <system_error>
 
 Entity::Entity(SDL_FPoint pos){}
 Entity::~Entity() = default;
@@ -44,6 +45,10 @@ void Entity::updateBound(){
 // Collision detection 
 void Entity::checkCollision(Entity *other){
     if (SDL_HasRectIntersectionFloat(&bound, &other->bound)) { onCollision(other);}
+}
+
+void Entity::checkCollision(Entity *other, int *side){
+    if (!SDL_HasRectIntersectionFloat(&bound, &other->bound)) return;
 }
 
 void Entity::onCollision(Entity *other){}
@@ -94,6 +99,8 @@ SDL_FRect Entity::getBound(){ return bound; }
 SDL_FRect Entity::getSrcRect(){ return src_rect;}
 SDL_FRect Entity::getDstRect(){ return dst_rect; }
 bool Entity::getActive(){ return active;}
+        
+int Entity::getTypeID() const { return 0;};
 
 int Entity::getHeight(){ return static_cast<int>(src_rect.h); }
 int Entity::getWidth(){ return static_cast<int>(src_rect.w); }
