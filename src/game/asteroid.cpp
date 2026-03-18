@@ -1,5 +1,4 @@
 #include "asteroid.h"
-#include "bulletmanager.h"
 #include "variables.h"
 
 #include "../core/algorithm.h"
@@ -7,20 +6,28 @@
 
 #include <cmath>
 #include <cstdint>
+#include <cstdio>
 #include <iostream>
+#include <ostream>
 
 void Asteroid::update(){
-    Entity::update();
 
     static uint64_t current_time, last_time;
 
     current_time = getTime();
-    if (current_time - last_time >= asteroid_delay && asteroids.size() < asteroid_max_count) {
+    uint64_t delta_time = current_time - last_time;
+    if (delta_time >= asteroid_delay) {
         spwan();
+        if (asteroid_delay > asteroid_min_delay) asteroid_delay -= 1;
+        if (asteroid_speed < asteroid_max_speed) asteroid_speed += 1;
+        
         last_time = current_time;
-        if (asteroid_delay > asteroid_min_delay) asteroid_delay -= 4;
     }
-    getAsteroidManager().update();
+
+    asteroids.cleanUp();
+
+    Entity::update();
+    asteroids.update();
 }
 
 void Asteroid::spwan(){
@@ -70,14 +77,44 @@ void Asteroid::spwan(){
 // Collision 
 void Asteroid::onCollision(Entity *other){
     if (!other->getActive()) return; // return if other is not active
-   
-    other->setActive(false);
-    if (this->getScale() > 2) {
-        this->setScale(this->getScale()-1);
-    }else {
-        this->setActive(false);
-    }
-    score += 10;
+
+    if (other->getTypeID() == 3) { // for bullet vs asteroid
+        other->setActive(false);
+        if (this->getScale() > 2) {
+            this->setScale(this->getScale()-1);
+        }else {
+            this->setActive(false);
+        }
+        score += 10;
+    } else if (other->getTypeID() == 2) {// for asteroid vs asteroid
+        int size1 = this->getScale();
+        int size2 = other->getScale();
+
+        float dx = this->getPositionX() - other->getPositionX();
+        float dy = this->getPositionY() - other->getPositionY();
+
+        float distance = std::sqrt(dx*dx + dy*dy);
+
+        float nx = dx / distance;
+        float ny = dy / distance;
+
+        //relative veloccity
+        float dvx = this->getVelocityX() - other->getVelocityX();
+        float dvy = this->getVelocityY() - other->getVelocityY();
+
+        //velocity along normal
+        float dot_product = dvx * nx + dvy * ny;
+
+        //impulse calculate
+        float impulse = (2 * dot_product) / (size1 + size2);
+
+        //bounce 
+        this->velocity.x -= impulse * nx * size2;
+        this->velocity.y -= impulse * ny * size2;
+        other->velocity.x += impulse * nx * size1;
+        other->velocity.y += impulse * ny * size1;
+
+     }
 }
 
 void Asteroid::render(SDL_Renderer *renderer){

@@ -23,6 +23,9 @@ int main(int argc, char *argv[])
     texture *asteroid05_tex = app.createTextureFromSurface("assets/asteroid05.png");
     std::vector<SDL_Texture*> asteroid_tex = {asteroid01_tex, asteroid02_tex, asteroid03_tex, asteroid04_tex, asteroid05_tex};
 
+    texture *start_ui = app.createTextureFromSurface("assets/start.png");
+    texture *game_over_ui = app.createTextureFromSurface("assets/gameover.png");
+
     Player player;
     player.setTexture(player_tex,0, 0, 24, 24);
     player.setTextureList(player_tex_list);
@@ -30,13 +33,28 @@ int main(int argc, char *argv[])
     player.setBulletTex(bullet_tex);
 
     Bullet bullets;
-    bullets.setTexture(bullet_tex, 0, 0, 3, 3);
+    bullets.setTexture(bullet_tex, 0, 0, 3, 6);
 
     Asteroid asteroid;
     asteroid.setTextureList(asteroid_tex);
 
+    mode = start;
+
     SDL_Event event;
     while (game_running) {
+
+        switch (mode) {
+            case start:
+
+                break;
+            case game:
+
+                break;
+            case result:
+
+                break;
+
+        }
         updateTime(); 
         uint64_t start_time = getTime();
 
@@ -50,14 +68,27 @@ int main(int argc, char *argv[])
         asteroid.update();
 
         //collision
+        //bullet vs asteroid
         for (auto *bullets : player.getBulletManager().getEntities()) {
             for (auto *asteroids : asteroid.getAsteroidManager().getEntities()) {
                  asteroids->checkCollision(bullets);
             }
         }
+        // asteroid vs player
         for (auto *ast : asteroid.getAsteroidManager().getEntities()) {
             player.checkCollision(ast);
         }
+
+
+        // asteroid vs asteroid
+        auto asteroids = asteroid.getAsteroidManager().getEntities();
+        for (size_t i = 0; i < asteroids.size(); i++) {
+            for (size_t j = i + 1; j < asteroids.size(); j++) {
+                asteroids[i]->checkCollision(asteroids[j]);
+            }
+        }
+
+
 
         //render
         app.renderClear();

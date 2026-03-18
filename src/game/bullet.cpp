@@ -23,9 +23,6 @@ void Bullet::setHealth(int hp) { health = hp; }
 int Bullet::getHealth() { return health; }
 
 void Bullet::onCollision(Entity *other) {
-    if (!other->getActive()) return;
-    if (other->getTypeID() == 1) return;
-    active = false;
 }
 
 int Bullet::getTypeID() const { return type_id; }

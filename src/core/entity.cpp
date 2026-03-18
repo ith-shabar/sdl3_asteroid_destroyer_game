@@ -47,10 +47,25 @@ void Entity::checkCollision(Entity *other){
     if (SDL_HasRectIntersectionFloat(&bound, &other->bound)) { onCollision(other);}
 }
 
-void Entity::checkCollision(Entity *other, int *side){
+void Entity::checkCollision(Entity *other, side& sd){
     if (!SDL_HasRectIntersectionFloat(&bound, &other->bound)) return;
+    float centerAX = bound.x + bound.w / 2.0f;
+    float centerAY = bound.y + bound.h / 2.0f;
+    float centerBX = other->bound.x + other->bound.w / 2.0f;
+    float centerBY = other->bound.y + other->bound.h / 2.0f;
+    float dx = centerAX - centerBX;
+    float dy = centerAY - centerBY;
+    float minDistX = (bound.w + other->bound.w) / 2.0f;
+    float minDistY = (bound.h + other->bound.h) / 2.0f;
+    float overlapX = minDistX - abs(dx);
+    float overlapY = minDistY - abs(dy);
+    if (overlapX < overlapY) {
+        sd = (dx > 0) ? right : left;
+    } else {
+        sd = (dy > 0) ? bottom : top;
+    }
+    onCollision(other);
 }
-
 void Entity::onCollision(Entity *other){}
 
 //Setters

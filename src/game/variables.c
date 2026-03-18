@@ -15,6 +15,7 @@ int asteroid_speed = 200;
 int asteroid_delay = 500;
 int asteroid_min_delay = 100;
 int asteroid_max_count = 20;
+int asteroid_max_speed = 500;
 
 game_mode mode;
 levels level;
