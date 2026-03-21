@@ -3,16 +3,18 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 typedef SDL_Texture texture;
 
 class App {
     private:
         SDL_Window *window = nullptr;
-        SDL_Renderer *renderer = nullptr;
+        static SDL_Renderer *renderer;
 
     public:
         int init();
+        int initTTF();
 
         int renderWindow(char *title, int width, int height, uint32_t flags);
 
@@ -21,10 +23,10 @@ class App {
         void renderClear();
         void display();
 
-        SDL_Renderer *getRenderer();
+        static SDL_Renderer *getRenderer();
 
         void quitApp();
-        void quitAppAndPrintError();
+        static void quitAppAndPrintError();
 };
 
 

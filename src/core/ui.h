@@ -32,7 +32,7 @@ class Ui {
         virtual void checkClick();
         virtual void onClick(SDL_FRect *rect);
 
-        void updateBound();
+        virtual void updateBound();
 
         //Setters
         void setTexture(SDL_Texture *tex, int x, int y, int width , int height);

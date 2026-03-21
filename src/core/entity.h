@@ -24,7 +24,7 @@ class Entity {
         bool active = true;
 
         Entity(SDL_FPoint pos = {0.0f, 0.0f});
-        ~Entity();
+        virtual ~Entity();
 
         virtual void update();
         virtual void render(SDL_Renderer *renderer);

@@ -84,9 +84,13 @@ void Player::onCollision(Entity *other){
     if (!other->getActive()) return;
 
     if (other->getTypeID() == 2) {
-        this->setActive(false);
-        mode = result;
-        std::cout<<"score:"<<score<< std::endl;
+        other->setActive(false);
+        player_health -= 20;
+        if (player_health <= 0) {
+            this->setActive(false);
+            mode = result;
+            score_obtained = score;
+        }
     }
 }
 

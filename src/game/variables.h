@@ -16,6 +16,7 @@ extern int player_speed;
 extern int player_health;
 extern int player_damage;
 extern int score;
+extern int score_obtained;
 
 extern int bullet_speed;
 extern int bullet_spread;
@@ -44,6 +45,8 @@ extern bool keyD;
 extern bool keySpace;
 extern bool keyMouseButtonLeft;
 extern int multi_key_press;
+
+void reset();
 
 #ifdef __cplusplus
 }

@@ -115,11 +115,13 @@ endif()
 # Find and link SDL3 properly
 find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
+find_package(SDL3_ttf REQUIRED)
 
 target_link_libraries(${BINARY}
     PRIVATE
         SDL3::SDL3
         SDL3_image::SDL3_image
+        SDL3_ttf::SDL3_ttf
 )
 
 if(UNIX AND NOT APPLE)

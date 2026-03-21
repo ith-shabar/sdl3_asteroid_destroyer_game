@@ -1,21 +1,20 @@
 #include "core/app.h"
 #include "core/time.h"
-#include "core/ui.h"
 #include "core/uimanager.h"
+#include "core/textui.h"
 #include "game/bullet.h"
 #include "game/player.h"
 #include "game/asteroid.h"
 #include "game/buttonui.h"
 #include "game/variables.h"
 #include <vector>
-#include <iostream>
 
-void reset();
 
 int main(int argc, char *argv[])
 {               
     App app;
     app.init();
+    app.initTTF();
     app.renderWindow("astdst", SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
     texture *player_tex = app.createTextureFromSurface("assets/player.png");
@@ -39,6 +38,7 @@ int main(int argc, char *argv[])
     player.setTextureList(player_tex_list);
     player.setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     player.setScale(1.5f);
+    player.setHealth(player_health);
     player.setBulletTex(bullet_tex);
 
     Bullet bullets;
@@ -49,18 +49,33 @@ int main(int argc, char *argv[])
 
     UiManager<Button> uimanager;
 
-    Button start_button;
-    start_button.setTexture(start_ui, 0, 0, 60, 30);
-    start_button.setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    start_button.setScale(2);
-    uimanager.add(&start_button);
+    Button *start_button = new Button();
+    start_button->setTexture(start_ui, 0, 0, 60, 30);
+    start_button->setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    start_button->setScale(2);
+    uimanager.add(start_button);
 
-    Button restart_button;
-    restart_button.setTexture(restart_ui, 0, 0, 60, 30);
-    restart_button.setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    restart_button.setScale(2);
-    uimanager.add(&restart_button);
+    Button *restart_button = new Button();
+    restart_button->setTexture(restart_ui, 0, 0, 60, 30);
+    restart_button->setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    restart_button->setScale(2);
+    uimanager.add(restart_button);
 
+    TextUi *score_text = new TextUi(); 
+    score_text->setFont("assets/ttf/ARCADECLASSIC.TTF", 24);
+    score_text->setFormat("score %d",score_obtained);
+    score_text->setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100);
+
+    TextUi *current_score_text = new TextUi(); 
+    current_score_text->setFont("assets/ttf/ARCADECLASSIC.TTF", 24);
+    current_score_text->setFormat("score %d",score);
+    current_score_text->setPosition(100, 50);
+
+    TextUi *health = new TextUi(); 
+    health->setFont("assets/ttf/ARCADECLASSIC.TTF", 24);
+    health->setFormat("health %d",player.getHealth());
+    health->setPosition(SCREEN_WIDTH - 100, 50);
+    
     reset();
 
     SDL_Event event;
@@ -86,7 +101,8 @@ int main(int argc, char *argv[])
         // update and checkCollision
         switch (mode) {
             case start:
-                start_button.update();
+                start_button->update();
+                score_obtained = score;
                 reset();
                 player.getBulletManager().clear();
                 player.setActive(true);
@@ -96,6 +112,9 @@ int main(int argc, char *argv[])
                 //update
                 player.update();
                 asteroid.update();
+
+                current_score_text->setFormat("score  %d",score);
+                health->setFormat("health  %d",player.getHealth());
 
                 //collision
                 //bullet vs asteroid
@@ -116,10 +135,15 @@ int main(int argc, char *argv[])
                         asteroids[i]->checkCollision(asteroids[j]);
                     }
                 }
+
                 break;
+
             }
             case result:
-                      restart_button.update();
+                restart_button->update();
+                score_text->update();
+
+                score_text->setFormat("score %d",score_obtained);
                 break;
 
         }
@@ -129,14 +153,17 @@ int main(int argc, char *argv[])
 
         switch (mode) {
             case start:
-                start_button.render(app.getRenderer());
+                start_button->render(app.getRenderer());
                 break;
             case game:
                 player.render(app.getRenderer());
                 asteroid.render(app.getRenderer());
+                current_score_text->render(app.getRenderer());
+                health->render(app.getRenderer());
                 break;
             case result:
-                restart_button.render(app.getRenderer());
+                restart_button->render(app.getRenderer());
+                score_text->render(app.getRenderer());
                 break;
         }
 
@@ -147,42 +174,5 @@ int main(int argc, char *argv[])
 
     uimanager.clear();
     return 0;
-}
-
-void reset(){
-    static int default_player_speed = player_speed;
-    static int default_player_health = player_health;
-    static int default_player_damage = player_damage;
-    static int default_score = score;
-    static int default_bullet_speed = bullet_speed;
-    static int default_bullet_spread = bullet_spread;
-    static int default_bullet_delay = bullet_delay;
-    static int default_asteroid_speed = asteroid_speed;
-    static int default_asteroid_delay = asteroid_delay;
-    static int default_asteroid_min_delay = asteroid_min_delay;
-    static int default_asteroid_max_count = asteroid_max_count;
-    static int default_asteroid_max_speed = asteroid_max_speed;
-    static int default_asteroid_max_size = asteroid_max_size;
-    player_speed = default_player_speed;
-    player_health = default_player_health;
-    player_damage = default_player_damage;
-    score = default_score;
-    bullet_speed = default_bullet_speed;
-    bullet_spread = default_bullet_spread;
-    bullet_delay = default_bullet_delay;
-    asteroid_speed = default_asteroid_speed;
-    asteroid_delay = default_asteroid_delay;
-    asteroid_min_delay = default_asteroid_min_delay;
-    asteroid_max_count = default_asteroid_max_count;
-    asteroid_max_speed = default_asteroid_max_speed;
-    asteroid_max_size = default_asteroid_max_size;
-
-
-    keyW = false;
-    keyA = false;
-    keyS = false;
-    keyD = false;
-    keySpace = false;
-    keyMouseButtonLeft = false;
 }
 
