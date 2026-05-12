@@ -2,11 +2,12 @@
 #define BULLET_H
 
 #include "../core/entity.h"
+#include "variables.h"
 
 class Bullet : public Entity {
     private:
         int health = 1;
-        static constexpr int type_id = 3;
+        static constexpr id_types id_type = bullet;
 
     public:
         void update() override;

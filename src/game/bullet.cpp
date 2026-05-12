@@ -1,8 +1,5 @@
 #include "bullet.h"
 #include "variables.h"
-#include "../core/algorithm.h"
-
-#include <cmath>
 
 void Bullet::update() {
     if (!active) return;
@@ -25,4 +22,4 @@ int Bullet::getHealth() { return health; }
 void Bullet::onCollision(Entity *other) {
 }
 
-int Bullet::getTypeID() const { return type_id; }
+int Bullet::getTypeID() const { return id_type; }

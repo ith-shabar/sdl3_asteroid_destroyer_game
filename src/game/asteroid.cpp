@@ -3,6 +3,7 @@
 
 #include "../core/algorithm.h"
 #include "../core/time.h"
+#include "../core/audio.h"
 
 #include <SDL3/SDL_render.h>
 #include <cmath>
@@ -76,17 +77,20 @@ void Asteroid::spwan(){
 void Asteroid::onCollision(Entity *other){
     if (!other->getActive()) return; // return if other is not active
 
-    if (other->getTypeID() == 3) { // for bullet vs asteroid
+    if (other->getTypeID() == bullet) { // for bullet vs asteroid
         other->setActive(false);
+        Audio::getInstance()->playSfx(0);
         if (this->getScale() > 2) {
             this->setScale(this->getScale()-1);
         }else {
             this->setActive(false);
+            Audio::getInstance()->playSfx(1);
+            Audio::getInstance()->playSfx(4);
         }
         score += 10;
     }
 
-    else if (other->getTypeID() == 2) {// for asteroid vs asteroid
+    else if (other->getTypeID() == asteroid) {// for asteroid vs asteroid
         int size1 = this->getScale();
         int size2 = other->getScale();
 
@@ -127,7 +131,7 @@ void Asteroid::setAsteroidTex(SDL_Texture *texture){ asteroid_texture = texture;
 void Asteroid::setHealth(int hp){ health = hp;}
 int Asteroid::getHealth(){ return health;}
 
-int Asteroid::getTypeID() const { return type_id;}
+int Asteroid::getTypeID() const { return id_type;}
 
 AsteroidManager& Asteroid::getAsteroidManager(){ return asteroids; }
 

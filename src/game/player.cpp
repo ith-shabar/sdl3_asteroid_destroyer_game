@@ -1,8 +1,9 @@
+#include "../core/audio.h"
 #include "player.h"
 #include "variables.h"
 
+#include <atomic>
 #include <cmath>
-#include <iostream>
 
 void Player::update(){
    float vx = 0,vy = 0;
@@ -78,18 +79,22 @@ void Player::handleInput(SDL_Event &event){
 
 void Player::fireBullet(){
     bullets.spawn(position, rotation);
+    Audio::getInstance()->playSfx(2);
 }
 
 void Player::onCollision(Entity *other){
     if (!other->getActive()) return;
 
-    if (other->getTypeID() == 2) {
+    if (other->getTypeID() == asteroid) {
         other->setActive(false);
+        Audio::getInstance()->playSfx(3);
         player_health -= 20;
         if (player_health <= 0) {
             this->setActive(false);
             mode = result;
             score_obtained = score;
+            Audio::getInstance()->playSfx(4);
+            Audio::getInstance()->playSfx(5);
         }
     }
 }
@@ -102,7 +107,7 @@ void Player::setBulletTex(SDL_Texture * texture){
 void Player::setHealth(int health){ player_health = health; }
 int Player::getHealth(){ return player_health; }
 
-int Player::getTypeID() const { return type_id;}
+int Player::getTypeID() const { return id_type;}
 
 BulletManager& Player::getBulletManager(){ return bullets; }
 

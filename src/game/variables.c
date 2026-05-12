@@ -37,6 +37,7 @@ static const int default_asteroid_max_size = 4;
 
 game_mode mode = start;
 levels level;
+id_types id_type;
 
 bool keyW = false;
 bool keyA = false;

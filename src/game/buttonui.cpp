@@ -1,5 +1,6 @@
 #include "buttonui.h"
 #include "variables.h"
+#include "../core/audio.h"
 
 
 void Button::update(){
@@ -24,4 +25,5 @@ void Button::checkClick(){
 void Button::onClick(SDL_FRect *rect){
     if (mode == start)  mode = game; 
     else if (mode == result)  mode = start;
+    Audio::getInstance()->playSfx(0);
 }

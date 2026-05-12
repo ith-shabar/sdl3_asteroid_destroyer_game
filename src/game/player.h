@@ -3,6 +3,7 @@
 
 #include "../core/entity.h"
 #include "bulletmanager.h"
+#include "variables.h"
 
 #include <SDL3/SDL.h>
 
@@ -13,7 +14,8 @@ class Player : public Entity {
         BulletManager bullets;
         SDL_Texture *bullet_texture = nullptr;
 
-        static constexpr int type_id = 1;
+        static constexpr id_types id_type = player;
+
     public:
         void update() override;
         void render(SDL_Renderer *renderer) override;

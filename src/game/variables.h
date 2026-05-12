@@ -29,13 +29,16 @@ extern int asteroid_max_count;
 extern int asteroid_max_speed;
 extern int asteroid_max_size;
 
-typedef enum game_mode { start, game, result } game_mode;
+typedef enum { start, game, result } game_mode;
 extern game_mode mode;
 
-typedef enum levels { one,two,three,four } levels;
+typedef enum { one,two,three,four } levels;
 extern levels level;
 
-typedef enum screen_side { top, bottom, left, right} screen_side;
+typedef enum  { top, bottom, left, right} screen_side;
+
+typedef enum { entity, player, asteroid, bullet, enemy } id_types;
+extern id_types id_type;
 
 //Keys 
 extern bool keyW;

@@ -1,4 +1,5 @@
 #include "core/app.h"
+#include "core/audio.h"
 #include "core/time.h"
 #include "core/uimanager.h"
 #include "core/textui.h"
@@ -7,6 +8,7 @@
 #include "game/asteroid.h"
 #include "game/buttonui.h"
 #include "game/variables.h"
+
 #include <vector>
 
 
@@ -30,8 +32,15 @@ int main(int argc, char *argv[])
     std::vector<SDL_Texture*> asteroid_tex = {asteroid01_tex, asteroid02_tex, asteroid03_tex, asteroid04_tex, asteroid05_tex, asteroidcollision_tex};
 
     texture *start_ui = app.createTextureFromSurface("assets/start.png");
-    texture *game_over_ui = app.createTextureFromSurface("assets/gameover.png");
     texture *restart_ui = app.createTextureFromSurface("assets/restart.png");
+
+    Audio::getInstance()->init();
+    Audio::getInstance()->loadSfx(0, "assets/sfx/hit.wav");
+    Audio::getInstance()->loadSfx(1, "assets/sfx/hit2.wav");
+    Audio::getInstance()->loadSfx(2, "assets/sfx/shoot.wav");
+    Audio::getInstance()->loadSfx(3, "assets/sfx/explosion.wav");
+    Audio::getInstance()->loadSfx(4, "assets/sfx/explosion1.wav");
+    Audio::getInstance()->loadSfx(5, "assets/sfx/game_over.wav");
 
     Player player;
     player.setTexture(player_tex,0, 0, 24, 24);

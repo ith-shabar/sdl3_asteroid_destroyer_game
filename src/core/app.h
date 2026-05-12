@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_mixer/SDL_mixer.h>
 
 typedef SDL_Texture texture;
 
@@ -11,6 +12,7 @@ class App {
     private:
         SDL_Window *window = nullptr;
         static SDL_Renderer *renderer;
+        
 
     public:
         int init();
@@ -25,7 +27,8 @@ class App {
 
         static SDL_Renderer *getRenderer();
 
-        void quitApp();
+        static void quitApp();
+        static void printError();
         static void quitAppAndPrintError();
 };
 

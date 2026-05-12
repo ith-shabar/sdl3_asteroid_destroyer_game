@@ -3,6 +3,7 @@
 
 #include "../core/entity.h"
 #include "asteroidmanager.h"
+#include "variables.h"
 
 class Asteroid : public Entity {
     private:
@@ -11,7 +12,7 @@ class Asteroid : public Entity {
         AsteroidManager asteroids;
         SDL_Texture *asteroid_texture = nullptr;
 
-        static constexpr int type_id = 2;
+        static constexpr id_types id_type = asteroid;
 
     public:
         void spwan();

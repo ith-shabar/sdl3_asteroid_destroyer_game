@@ -1,5 +1,5 @@
 #include "app.h"
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3/SDL_error.h>
 #include <cstdio>
 #include <cstdlib>
 
@@ -45,6 +45,9 @@ void App::display(){ SDL_RenderPresent(renderer); }
 SDL_Renderer *App::getRenderer(){ return renderer; }
 
 void App::quitApp(){ exit(1); }
+void App::printError(){ 
+    printf("An Error has occured : %s\n", SDL_GetError());
+}
 void App::quitAppAndPrintError(){
     printf("And Error has occured : %s\n", SDL_GetError());
     exit(1);

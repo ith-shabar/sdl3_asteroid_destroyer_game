@@ -1,7 +1,6 @@
 #include "entity.h"
 #include "time.h"
 #include <SDL3/SDL.h>
-#include <system_error>
 
 Entity::Entity(SDL_FPoint pos){}
 Entity::~Entity() = default;

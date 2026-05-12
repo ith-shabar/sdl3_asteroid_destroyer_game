@@ -68,7 +68,7 @@ void Enemy::setEnemyTex(SDL_Texture * texture){
 void Enemy::setHealth(int health){ player_health = health; }
 int Enemy::getHealth(){ return player_health; }
 
-int Enemy::getTypeID() const { return type_id;}
+int Enemy::getTypeID() const { return id_type;}
 
 BulletManager& Enemy::getBulletManager(){ return bullets; }
 
